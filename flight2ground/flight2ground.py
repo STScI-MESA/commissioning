@@ -192,7 +192,15 @@ def main(args):
 
     # collapse from 4D to 3D
     nints, ngroups, nx, ny = pixel_data.shape
-    new_hdulist[0].data = pixel_data.reshape((nints*ngroups, nx, ny))
+
+    # add reference output for MIRI
+    if old_hdulist['PRIMARY'].header['INSTRUME'] == 'MIRI':
+        new_hdulist[0].data = np.append(old_hdulist['SCI'].data.reshape((nints*ngroups, nx, ny)), 
+            old_hdulist['REFOUT'].data.reshape((nints*ngroups, 256, 1032)), axis=1)
+
+    else:
+        new_hdulist[0].data = pixel_data.reshape((nints*ngroups, nx, ny))
+
     new_hdulist[0].header.set('', '', before='BSCALE')
 
     # remove the NEXTEND keyword since there is only one extension now
