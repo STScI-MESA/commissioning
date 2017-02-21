@@ -6,5 +6,7 @@ It also makes the transformation from DMS coordinates to Detector coordinates an
 ## Usage
 An example configuration file ``tlm.cfg`` is included.
 
+The script currently requires Python 2
+
 The script can be run with
 ``python flight2ground.py tlm.cfg inputs.fits output.fits``
